@@ -350,7 +350,7 @@ For issues, questions, or feature requests, please open an [Issue](https://githu
 ---
 
 
-**Status**: Active Development ✅
+
 
 ---
 
@@ -709,7 +709,5 @@ dotnet ef database update
 ---
 
 
-**وضعیت**: پایان یافته ✅
-ادامه این پروژه در ریپازتوری جدید و با رعایت اصول Clean Architecture یا Onion Architecture انجام میشود
 
 </div>
