@@ -1,0 +1,111 @@
+﻿@using ContactsManager.Core.DTO;
+@model IEnumerable<PersonResponse>
+@{
+    ViewBag.Title = "Persons";
+}
+
+<form asp-controller="Persons" asp-action="Index" method="get">
+
+    <!-- breadcrumb starts -->
+    <div class="flex">
+        <div class="flex-1">
+            <div class="text-grey">
+                <span>Contacts</span>
+                <i class="fa-solid fa-caret-right"></i>
+                <span class="text-grey">Persons</span>
+            </div>
+        </div>
+
+        <div class="flex-1 text-right">
+            <span class="pill">Total: @(Model?.Count() ?? 0)</span>
+
+            <a asp-controller="Persons" asp-action="Create" class="button button-green-back ml"> <i class="fa fa-plus" aria-hidden="true"></i> Create</a>
+
+            <a asp-controller="Persons" asp-action="PersonsPDF" class="button button-blue-back ml"> <i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</a>
+
+            <a asp-controller="Persons" asp-action="PersonsCSV" class="button button-blue-back ml"> <i class="fa fa-file-csv" aria-hidden="true"></i> CSV</a>
+
+            <a asp-controller="Persons" asp-action="PersonsExcel" class="button button-blue-back ml"> <i class="fa fa-file-excel" aria-hidden="true"></i> Excel</a>
+        </div>
+    </div>
+    <!-- breadcrumb endds -->
+
+    <div class="table-container">
+        <div class="flex">
+            <div class="flex-1">
+                <h1>Persons</h1>
+            </div>
+            <div class="flex-3 text-right">
+                <label>Search by:</label>
+
+                <select class="search-dropdown" name="searchBy" style="width: 200px">
+                    @foreach (var field in ViewBag.SearchFields)
+                    {
+                        if (field.Key == ViewBag.CurrentSearchBy)
+                        {
+                            <option value="@field.Key" selected="selected">@field.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@field.Key">@field.Value</option>
+                        }
+
+                    }
+                    @* Eg: searchBy=PersonName&searchString=abc *@
+                </select>
+
+                <input type="search" id="Search" class="search-text" placeholder="Search" name="searchString" value="@ViewBag.CurrentSearchString" style="width:200px" />
+
+                <button class="search-button">Search</button>
+
+                <a asp-controller="Persons" asp-action="Index" class="ml link-hover">Clear all</a>
+            </div>
+        </div>
+
+    <div class="rounded-box border-base-content/5 bg-base-100 overflow-x-auto border">
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="p text-center">No persons found. Try changing your search or add a new person.</div>
+        }
+        else
+        {
+            <table class="table" style="width: 100%">
+                <thead>
+                <tr>
+                    @foreach (var Column in (ViewBag.Columns))
+                        {
+                            @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData)
+                                            {
+                                            { "ColumnName" , Column.Key },
+                                            {"DisplayName", Column.Value}
+                                            }
+                            );
+                        }
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var person in Model)
+                    {
+                        <tr class="hover:bg-base-300">
+                            <td>@person.PersonName</td>
+                            <td>@person.Email</td>
+                            <td>@person.DateOfBirth?.ToString("dd/MM/yyyy")</td>
+                            <td>@person.Country</td>
+                            <td>@person.Age</td>
+                            <td>@person.Gender</td>
+                            <td>
+                                <a asp-controller="Persons" asp-action="Update" asp-route-personID="@person.PersonID" class="button button"> <i class="fa fa-pen" aria-hidden="true"></i> Update</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Persons" asp-action="Delete" asp-route-personID="@person.PersonID" class="button button-red-back"> <i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</form>
+

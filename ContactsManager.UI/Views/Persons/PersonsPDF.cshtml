@@ -1,0 +1,40 @@
+﻿@using ContactsManager.Core.DTO;
+@model IEnumerable<PersonResponse>
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="@("http://" + Context.Request.Host.ToString() + "/css/style.css")" />
+<table class="table" style="width: 80%">
+    <thead>
+        <tr>
+            <th>Person Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Country</th>
+            <th>Address</th>
+            <th>Recieve News Letters</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr class="hover:bg-base-300">
+                <td>@person.PersonName</td>
+                <td>@person.Email</td>
+                <td>@person.DateOfBirth?.ToString("dd/MM/yyyy")</td>
+                <td>@person.Age</td>
+                <td>@person.Gender</td>
+                <td>@person.Country</td>
+                <th>@person.Address</th>
+                <th>@person.ReceiveNewsLetters</th>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
