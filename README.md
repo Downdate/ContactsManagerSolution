@@ -1,4 +1,4 @@
-# CRUD Contact Manager
+# Contact Manager
 
 A modern, full-featured contact management application built with **ASP.NET Core 10.0** and **Entity Framework Core**. Manage your contacts with ease using this clean, intuitive web application that supports advanced filtering, sorting, and multiple export formats.
 
@@ -356,7 +356,7 @@ For issues, questions, or feature requests, please open an [Issue](https://githu
 
 ---
 
-# مدیریت مخااطبین CRUD
+# مدیریت مخااطبین
 
 <div dir="rtl">
 
