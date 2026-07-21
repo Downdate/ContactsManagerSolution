@@ -37,9 +37,19 @@
 
                             <ul>
                                 <li>
-                                    <a asp-controller="Account" asp-action="Register">Register</a>
-                                    <a asp-controller="Account" asp-action="Login">Login</a>
+                                    @User.Identity?.Name
                                 </li>
+                                @if (User.Identity.IsAuthenticated == false)
+                                    {
+                                    <li>
+                                        <a asp-controller="Account" asp-action="Register">Register</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Account" asp-action="Login">Login</a>
+                                    </li>
+                                    }
+
+                                
                             </ul>
                         </div>
 
