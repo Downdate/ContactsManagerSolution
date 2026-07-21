@@ -2,6 +2,7 @@
 @model IEnumerable<PersonResponse>
 @{
     Layout = null;
+    ViewBag.CurrentURL = Context.Request.Path;
 }
 
 <link rel="stylesheet" href="@("http://" + Context.Request.Host.ToString() + "/css/style.css")" />

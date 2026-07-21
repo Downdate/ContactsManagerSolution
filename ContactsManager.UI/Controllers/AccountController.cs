@@ -3,6 +3,7 @@ using ContactsManager.Core.DTO;
 using CRUDContactManager.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ContactsManager.UI.Controllers
 {
@@ -57,6 +58,16 @@ namespace ContactsManager.UI.Controllers
                 ViewBag.Errors = result.Errors.Select(temp => temp.Description).ToList();
                 return View(registerDTO);
             }
+
+            
         }
+
+        [HttpGet]
+        public Task<IActionResult> Logout()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
