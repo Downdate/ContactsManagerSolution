@@ -1,6 +1,9 @@
-﻿using ContactsManager.Core.ServiceContracts;
+﻿using ContactsManager.Core.Domain.IdentityEntities;
+using ContactsManager.Core.ServiceContracts;
 using CRUDContactManager.Filters.ActionFilters;
 using Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoryContracts;
@@ -46,6 +49,14 @@ namespace CRUDContactManager
             });
 
             services.AddTransient<PersonsListActionFilter>();
+
+            //Enable Identity in this project
+            services.AddIdentity < ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+
+                .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
+                .AddRoleStore<RoleStore<ApplicationRole,ApplicationDbContext, Guid>>();
 
             services.AddHttpLogging(options =>
             {
