@@ -18,7 +18,7 @@ namespace ContactsManager.Core.DTO
         [Required(ErrorMessage = "phone can't be blank")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Phone number should only contain numbers")]
         [DataType(DataType.PhoneNumber)]
-        public string phone { get; set; }
+        public string Phone { get; set; }
 
         [Required(ErrorMessage = "Password can't be blank")]
         [DataType(DataType.Password)]
