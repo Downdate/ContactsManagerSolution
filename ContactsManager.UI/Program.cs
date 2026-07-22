@@ -40,10 +40,11 @@ if (builder.Environment.IsEnvironment("Test") == false)
 app.UseStaticFiles();
 
 //add routing middleware
-app.UseAuthentication();
 
-app.UseRouting();
-app.MapControllers();
+app.UseRouting(); // Identifying action method based on route
+app.UseAuthentication(); //reading Identity Cookie
+app.UseAuthorization(); // Validates access permitions of the user
+app.MapControllers(); // executes the filter pipeline
 
 app.Run();
 
