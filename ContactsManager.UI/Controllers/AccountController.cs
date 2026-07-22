@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace ContactsManager.UI.Controllers
 {
     [Route("[controller]/[action]")]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
 
