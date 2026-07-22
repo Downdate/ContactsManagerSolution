@@ -1,5 +1,6 @@
 ﻿using ContactsManager.Core.Domain.IdentityEntities;
 using ContactsManager.Core.DTO;
+using ContactsManager.Core.Enums;
 using CRUDContactManager.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,13 +18,15 @@ namespace ContactsManager.UI.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
         //constructor to inject the service into the controller
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -50,6 +53,41 @@ namespace ContactsManager.UI.Controllers
 
             if (result.Succeeded)
             {
+                //check for the role and assign it to the user
+                if (registerDTO.UserType == Core.Enums.UserTypeOptions.Admin)
+                {
+                    if (await _roleManager.FindByNameAsync(UserTypeOptions.Admin.ToString()) is null)
+                    {
+                    //create admin role if it doesn't exist
+                        ApplicationRole applicationRole = new ApplicationRole() { Name = UserTypeOptions.Admin.ToString() };
+                        await _roleManager.CreateAsync(applicationRole);
+                        //add the new user to the admin role
+                        await _userManager.AddToRoleAsync(user, UserTypeOptions.Admin.ToString());
+                    }
+                    else 
+                    {
+                        await _userManager.AddToRoleAsync(user, UserTypeOptions.Admin.ToString());
+                    }
+
+
+                }
+
+                else
+                {
+                    if (await _roleManager.FindByNameAsync(UserTypeOptions.User.ToString()) is null)
+                    {
+                        //create User role if it doesn't exist 
+                        ApplicationRole applicationRole = new ApplicationRole() { Name = UserTypeOptions.User.ToString() };
+                        await _roleManager.CreateAsync(applicationRole);
+                        //add the new User to the User role
+                        await _userManager.AddToRoleAsync(user, UserTypeOptions.User.ToString());
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, UserTypeOptions.User.ToString());
+                    }
+                }
+
                 //sign in the user
                 await _signInManager.SignInAsync(user, isPersistent: true);
 
