@@ -481,6 +481,18 @@ a.button-link:link, a.button-link:visited {
         transform: translateY(-2px);
     }
 
+.button-red-back {
+    background-color: #e80202;
+    color: #f0f0f0;
+    border: 2px solid #3f80ca;
+}
+
+    .button-red-back:hover {
+        background-color: #b30404;
+        box-shadow: 0 4px 12px rgba(58, 129, 189, 0.4);
+        transform: translateY(-2px);
+    }
+
 .button-green-back {
     background-color: #088e36;
     color: #f0f0f0;
@@ -930,3 +942,57 @@ body.night-mode {
 
 
 
+.logout-card {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.12);
+    background: white;
+}
+
+.logout-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff2f2;
+}
+
+    .logout-icon i {
+        color: #d9534f;
+        font-size: 42px;
+    }
+
+.logout-message {
+    color: #666;
+    margin: 20px 0 35px;
+    font-size: 18px;
+}
+
+.logout-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+    .logout-buttons .button-red-back,
+    .logout-buttons .button-blue-back {
+        min-width: 150px;
+        text-decoration: none;
+    }
+
+.button-red-back,
+.button-blue-back {
+    transition: .25s;
+}
+
+    .button-red-back:hover,
+    .button-blue-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0,0,0,.15);
+    }

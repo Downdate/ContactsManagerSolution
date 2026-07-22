@@ -1,6 +1,7 @@
 ﻿using ContactsManager.Core.Domain.IdentityEntities;
 using ContactsManager.Core.DTO;
 using CRUDContactManager.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
@@ -62,10 +63,61 @@ namespace ContactsManager.UI.Controllers
             
         }
 
+
+        //login action methods
         [HttpGet]
-        public Task<IActionResult> Logout()
+        public IActionResult Login()
         {
-            throw new NotImplementedException();
+            return View();
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        {
+
+            if (!ModelState.IsValid) 
+            {
+
+                ViewBag.Errors = ModelState.Values.SelectMany(temp => temp.Errors).Select(temp => temp.ErrorMessage).ToList();
+                return View(loginDTO);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, isPersistent: false, lockoutOnFailure: false);
+
+            if (result.Succeeded) 
+            {
+                return RedirectToAction( nameof(PersonsController.Index), "Persons" );
+            }
+
+            else
+            {
+                ModelState.AddModelError("Login", "Invalid Email or Password.");
+                return View(loginDTO);
+            }
+
+
+        }
+
+
+        //logout action methods
+        
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            return View();
+        }
+
+
+        
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Logout")]
+        public async Task<IActionResult> LogoutPost()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction(nameof(Login));
         }
 
 
