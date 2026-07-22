@@ -126,5 +126,22 @@ namespace ContactsManager.UI.Controllers
         }
 
 
+
+        //action method to check if email is already registered
+        public async Task<IActionResult> IsEmailAlreadyRegistered(string email) 
+        {
+             ApplicationUser user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null) 
+            {
+                return Json(true); //valid email, not registered
+            }
+            else
+            {
+                return Json(false); //invalid email, already registered
+            }
+
+        }
+
     }
 }

@@ -14,7 +14,7 @@
     Not registered? <a asp-controller="Account" asp-action="Login" class="ml link-hover">Register</a>
     <h2 class="text-large">Log in</h2>
 
-    <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnURL="@Context.Request.Query["RetunURL"] >
+    <form asp-controller="Account" asp-action="Login" asp-route-returnURL="@Context.Request.Query["RetunURL"]" method="post">
 
         
         @*Email*@
@@ -68,6 +68,6 @@
                 </div>
             </div>
 
-        </form>
+    </form>
 
     </div>
