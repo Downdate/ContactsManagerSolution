@@ -36,6 +36,8 @@ namespace ContactsManager.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize("NotAuthorized")]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterDTO registerDTO) 
         {
             //check for validation errors
@@ -174,6 +176,8 @@ namespace ContactsManager.UI.Controllers
 
 
         //action method to check if email is already registered
+
+        [AllowAnonymous]
         public async Task<IActionResult> IsEmailAlreadyRegistered(string email) 
         {
              ApplicationUser user = await _userManager.FindByEmailAsync(email);
